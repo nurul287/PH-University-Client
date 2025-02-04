@@ -1,8 +1,8 @@
 import "./App.css";
-import Home from "./pages/Home";
+import MainLayout from "./components/layout/MainLayout";
 
 const App = () => {
-  return <Home />;
+  return <MainLayout />;
 };
 
 export default App;

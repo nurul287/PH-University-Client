@@ -1,7 +1,7 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { setupListeners } from "@reduxjs/toolkit/query";
 import logger from "redux-logger";
-import { NODE_ENV } from "../config";
+import { NODE_ENV } from "../config/config";
 import authReducer from "./feature/auth/authSlice";
 import counterReducer from "./feature/counter/counterSlice";
 import baseApi from "./services/baseApi";

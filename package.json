@@ -1,5 +1,5 @@
 {
-  "name": "cps-ui",
+  "name": "ph-university",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -10,11 +10,12 @@
     "preview": "vite preview --port 8080"
   },
   "dependencies": {
-    "@headlessui/react": "^2.2.0",
     "@reduxjs/toolkit": "^2.5.1",
     "@tailwindcss/vite": "^4.0.0",
+    "antd": "^5.23.3",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
+    "react-hook-form": "^7.54.2",
     "react-redux": "^9.2.0",
     "react-router-dom": "6.28.2",
     "redux-logger": "^3.0.6",
