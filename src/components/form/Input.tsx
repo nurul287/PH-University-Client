@@ -13,7 +13,7 @@ const Input: FC<IInputProps> = ({ type, name, label }) => {
       {label && <label htmlFor={name}>{label}</label>}
       <Controller
         name={name}
-        render={(fields) => <AntInput {...fields} type={type} id={name} />}
+        render={({ field }) => <AntInput {...field} type={type} id={name} />}
       />
     </div>
   );
