@@ -1,5 +1,5 @@
 import baseApi from "src/redux/api/baseApi";
-import { IApiResponse } from "src/types/generic.type";
+import { IApiResponse } from "src/types";
 
 interface IAcademicSemester {
   _id: string;

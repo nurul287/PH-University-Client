@@ -1,6 +1,5 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { setupListeners } from "@reduxjs/toolkit/query";
-import logger from "redux-logger";
 
 import {
   FLUSH,
@@ -16,7 +15,6 @@ import storage from "redux-persist/lib/storage";
 import { NODE_ENV } from "../config/config";
 import baseApi from "./api/baseApi";
 import authReducer from "./feature/auth/authSlice";
-import counterReducer from "./feature/counter/counterSlice";
 
 const persistConfig = {
   key: "auth",
@@ -27,7 +25,6 @@ const persistedAuthReducer = persistReducer(persistConfig, authReducer);
 export const store = configureStore({
   reducer: {
     [baseApi.reducerPath]: baseApi.reducer,
-    counter: counterReducer,
     auth: persistedAuthReducer,
   },
   devTools: NODE_ENV === "development",
@@ -36,7 +33,7 @@ export const store = configureStore({
       serializableCheck: {
         ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
       },
-    }).concat([logger, baseApi.middleware]),
+    }).concat([baseApi.middleware]),
 });
 
 export type RootState = ReturnType<typeof store.getState>;

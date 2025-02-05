@@ -1,26 +1,31 @@
-import { Button } from "antd";
+import { Button, Row } from "antd";
 import { useEffect } from "react";
-import { useForm } from "react-hook-form";
+import { FieldValues } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import Input from "src/components/form/Input";
+import LoginForm from "src/components/form/LoginForm";
 import { useAuth } from "src/hooks/useAuth";
 import { useLoginMutation } from "src/redux/feature/auth/authApi";
+import { setUser } from "src/redux/feature/auth/authSlice";
+import { useAppDispatch } from "src/redux/hooks";
 import { ILoginRequest } from "src/types";
+
+const defaultValues = {
+  id: "A-0001",
+  password: "admin1234",
+};
 
 const Login = () => {
   const navigate = useNavigate();
-  const { register, handleSubmit } = useForm({
-    defaultValues: {
-      id: "A-0001",
-      password: "admin1234",
-    },
-  });
+  const dispatch = useAppDispatch();
   const [login] = useLoginMutation();
   const { user } = useAuth();
 
-  const onSubmit = async (data: any) => {
+  const onSubmit = async (data: FieldValues) => {
     try {
-      await login(data as ILoginRequest);
+      const res = await login(data as ILoginRequest).unwrap();
+      dispatch(setUser({ token: res.data.accessToken }));
       toast.success("Logged in successfully.");
     } catch (error) {
       toast.error("Something went wrong");
@@ -34,17 +39,13 @@ const Login = () => {
   }, [user]);
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <div>
-        <label htmlFor="id">ID:</label>
-        <input type="text" id="id" {...register("id")} />
-      </div>
-      <div>
-        <label htmlFor="password">Password:</label>
-        <input type="password" id="password" {...register("password")} />
-      </div>
-      <Button htmlType="submit">Login</Button>
-    </form>
+    <Row justify={"center"} align={"middle"} style={{ height: "100vh" }}>
+      <LoginForm onSubmit={onSubmit} defaultValues={defaultValues}>
+        <Input type="text" name="id" label={"ID:"} />
+        <Input type="password" name="password" label="Password:" />
+        <Button htmlType="submit">Login</Button>
+      </LoginForm>
+    </Row>
   );
 };
 
