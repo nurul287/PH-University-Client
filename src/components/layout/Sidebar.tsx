@@ -1,4 +1,5 @@
 import { Layout, Menu, MenuProps } from "antd";
+import { useAuth } from "src/hooks/useAuth";
 import { adminPaths } from "src/routes/admin.routes";
 import { facultyPaths } from "src/routes/faculty.routes";
 import { studentPaths } from "src/routes/student.routes";
@@ -12,10 +13,10 @@ const UserRole = {
   STUDENT: "student",
 };
 const Sidebar = () => {
-  const role = UserRole.STUDENT;
+  const { user } = useAuth();
   let sidebarItems: MenuProps["items"] = [];
 
-  switch (role) {
+  switch (user?.role) {
     case UserRole.ADMIN:
       sidebarItems = sidebarItemsGenerator(adminPaths, "admin");
       break;

@@ -1,11 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { User } from "src/types";
+import { IUser } from "src/types";
 import { verifyToken } from "src/utils/verifyToken";
 import { RootState } from "../../store";
 import authApi from "./authApi";
 
 type AuthState = {
-  user: User | null;
+  user: IUser | null;
   token: string | null;
 };
 
@@ -22,13 +22,9 @@ const authSlice = createSlice({
     builder.addMatcher(
       authApi.endpoints.login.matchFulfilled,
       (state, { payload }) => {
-        console.log("playload", payload);
         state.token = payload.data.accessToken;
-        const user = verifyToken(payload.data.accessToken) as any;
-        state.user = {
-          userId: user.userId,
-          role: user.role,
-        };
+        const user = verifyToken(payload.data.accessToken) as IUser;
+        state.user = user;
       }
     );
   },

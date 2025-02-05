@@ -1,9 +1,11 @@
-export interface User {
+export interface IUser {
   userId: string;
   role: "admin" | "faculty" | "student";
+  iat: number;
+  exp: number;
 }
 
-export interface UserResponse {
+export interface IUserResponse {
   success: boolean;
   message: string;
   data: {
@@ -12,7 +14,7 @@ export interface UserResponse {
   };
 }
 
-export interface LoginRequest {
+export interface ILoginRequest {
   id: string;
   password: string;
 }
