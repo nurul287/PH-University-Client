@@ -3,8 +3,8 @@ import { useEffect } from "react";
 import { FieldValues } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import LoginForm from "src/components/form/Form";
 import Input from "src/components/form/Input";
-import LoginForm from "src/components/form/LoginForm";
 import { useAuth } from "src/hooks/useAuth";
 import { useLoginMutation } from "src/redux/feature/auth/authApi";
 import { setUser } from "src/redux/feature/auth/authSlice";
@@ -28,7 +28,7 @@ const Login = () => {
       dispatch(setUser({ token: res.data.accessToken }));
       toast.success("Logged in successfully.");
     } catch (error) {
-      toast.error("Something went wrong");
+      console.error(error);
     }
   };
 

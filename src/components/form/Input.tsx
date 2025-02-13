@@ -1,4 +1,4 @@
-import { Input as AntInput } from "antd";
+import { Input as AntInput, Form } from "antd";
 import { FC } from "react";
 import { Controller } from "react-hook-form";
 
@@ -10,10 +10,13 @@ interface IInputProps {
 const Input: FC<IInputProps> = ({ type, name, label }) => {
   return (
     <div className="mb-[20px]">
-      {label && <label htmlFor={name}>{label}</label>}
       <Controller
         name={name}
-        render={({ field }) => <AntInput {...field} type={type} id={name} />}
+        render={({ field }) => (
+          <Form.Item label={label}>
+            <AntInput {...field} type={type} id={name} />
+          </Form.Item>
+        )}
       />
     </div>
   );

@@ -28,6 +28,8 @@ const baseQueryWithRefreshToken = async (
 ) => {
   let result = await baseQuery(args, api, extraOptions);
   if (result.error) {
+    console.log(result);
+
     //handle refresh token
     if (result.error.status === 401) {
       const res = await fetch(`${API_URL}/auth/refresh-token`, {
@@ -42,8 +44,14 @@ const baseQueryWithRefreshToken = async (
         api.dispatch(logout());
       }
     } else {
-      const errorMessage = (result.error.data as { message: string }).message;
-      toast.error(errorMessage);
+      const errorMessage = result.error.data
+        ? (result.error.data as { message: string }).message
+        : "";
+      if (errorMessage) {
+        toast.error(errorMessage);
+      } else {
+        toast.error("Something went wrong");
+      }
     }
   }
   return result;
@@ -53,7 +61,7 @@ const baseApi = createApi({
   reducerPath: "api",
   baseQuery: baseQueryWithRefreshToken,
   refetchOnReconnect: true,
-  tagTypes: ["Post"],
+  tagTypes: [],
   endpoints: () => ({}),
 });
 

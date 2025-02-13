@@ -1,3 +1,4 @@
+import { Form as AntForm } from "antd";
 import { FC, ReactNode } from "react";
 import {
   FieldValues,
@@ -8,29 +9,36 @@ import {
 
 interface IFormConfig {
   defaultValues?: Record<string, any>;
+  resolver?: any;
 }
 
-interface ILoginFormProps extends IFormConfig {
+interface IFormProps extends IFormConfig {
   children: ReactNode;
   onSubmit: SubmitHandler<FieldValues>;
 }
-const LoginForm: FC<ILoginFormProps> = ({
+const Form: FC<IFormProps> = ({
   children,
   onSubmit,
   defaultValues,
+  resolver,
 }) => {
   const formConfig: IFormConfig = {};
 
   if (defaultValues) {
     formConfig["defaultValues"] = defaultValues;
   }
+  if (resolver) {
+    formConfig["resolver"] = resolver;
+  }
 
   const methods = useForm(formConfig);
   return (
     <FormProvider {...methods}>
-      <form onSubmit={methods.handleSubmit(onSubmit)}>{children}</form>
+      <AntForm layout="vertical" onFinish={methods.handleSubmit(onSubmit)}>
+        {children}
+      </AntForm>
     </FormProvider>
   );
 };
 
-export default LoginForm;
+export default Form;
