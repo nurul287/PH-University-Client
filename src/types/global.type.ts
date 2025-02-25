@@ -1,3 +1,5 @@
+import { BaseQueryApi } from "@reduxjs/toolkit/query";
+
 export type TError = {
   data: {
     message: string;
@@ -21,3 +23,10 @@ export interface TResponse<T> {
   meta?: TPagination;
   error?: TError;
 }
+
+export type TResponseRedux<T> = TResponse<T> & BaseQueryApi;
+
+export type TQueryParams = {
+  field: string;
+  value: string;
+};
