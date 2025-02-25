@@ -5,6 +5,7 @@ import {
   fetchBaseQuery,
 } from "@reduxjs/toolkit/query/react";
 import { toast } from "react-toastify";
+import { TError } from "src/types";
 import { API_URL } from "../../config/config";
 import { logout, setUser } from "../feature/auth/authSlice";
 import { RootState } from "../store";
@@ -28,8 +29,6 @@ const baseQueryWithRefreshToken = async (
 ) => {
   let result = await baseQuery(args, api, extraOptions);
   if (result.error) {
-    console.log(result);
-
     //handle refresh token
     if (result.error.status === 401) {
       const res = await fetch(`${API_URL}/auth/refresh-token`, {
@@ -45,7 +44,7 @@ const baseQueryWithRefreshToken = async (
       }
     } else {
       const errorMessage = result.error.data
-        ? (result.error.data as { message: string }).message
+        ? (result.error as TError).data.message
         : "";
       if (errorMessage) {
         toast.error(errorMessage);

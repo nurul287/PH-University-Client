@@ -1,3 +1,3 @@
 export * from "./auth.type";
-export * from "./generic.type";
+export * from "./global";
 export * from "./sidebar.type";
