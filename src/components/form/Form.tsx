@@ -1,5 +1,5 @@
 import { Form as AntForm } from "antd";
-import { FC, ReactNode } from "react";
+import { BaseSyntheticEvent, FC, ReactNode } from "react";
 import {
   FieldValues,
   FormProvider,
@@ -32,9 +32,14 @@ const Form: FC<IFormProps> = ({
   }
 
   const methods = useForm(formConfig);
+
+  const submit = (data: FieldValues, event?: BaseSyntheticEvent) => {
+    onSubmit(data, event);
+    methods.reset();
+  };
   return (
     <FormProvider {...methods}>
-      <AntForm layout="vertical" onFinish={methods.handleSubmit(onSubmit)}>
+      <AntForm layout="vertical" onFinish={methods.handleSubmit(submit)}>
         {children}
       </AntForm>
     </FormProvider>
